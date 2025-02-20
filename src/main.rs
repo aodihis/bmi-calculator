@@ -5,6 +5,8 @@
 mod routes;
 mod config;
 mod utils;
+mod handlers;
+mod models;
 
 use crate::config::Config;
 use actix_web::http::StatusCode;
