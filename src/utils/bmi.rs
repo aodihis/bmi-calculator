@@ -36,7 +36,7 @@ pub fn bmi_classification(bmi: f32) -> BmiClass {
 }
 
 fn two_decimals(num: f32) -> f32 {
-    (num * 100.0).floor() / 100.0
+    (num * 100.0).round() / 100.0
 }
 
 #[cfg(test)]
@@ -46,7 +46,10 @@ mod tests {
     #[test]
     fn test_calculate_bmi() {
         let res = calculate_bmi(50.0, 1.3);
-        assert_eq!(res, 29.58);
+        assert_eq!(res, 29.59);
+
+        let res = calculate_bmi(55.0, 1.61);
+        assert_eq!(res, 21.22);
 
         let res = calculate_bmi(90.0, 1.7);
         assert_eq!(res, 31.14);
