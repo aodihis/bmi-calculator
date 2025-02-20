@@ -10,29 +10,27 @@ pub enum ApiError {
 
     #[display("Deserialization error: {_0}")]
     DeserializationError(String),
-
 }
 
 impl ResponseError for ApiError {
     fn status_code(&self) -> StatusCode {
         match self {
-            ApiError::ValidationError(_) => {StatusCode::BAD_REQUEST}
-            ApiError::DeserializationError(_) => {StatusCode::BAD_REQUEST}
+            ApiError::ValidationError(_) => StatusCode::BAD_REQUEST,
+            ApiError::DeserializationError(_) => StatusCode::BAD_REQUEST,
         }
     }
 
     fn error_response(&self) -> HttpResponse {
         let status = self.status_code();
 
-        HttpResponse::build(status).json(
-            ErrorResponse {
-                status: StatusResponse::Error,
-                message: match self {
-                    ApiError::ValidationError(_) => "Invalid parameters",
-                    ApiError::DeserializationError(_) => "Invalid parameters",
-                }.to_string(),
+        HttpResponse::build(status).json(ErrorResponse {
+            status: StatusResponse::Error,
+            message: match self {
+                ApiError::ValidationError(_) => "Invalid parameters",
+                ApiError::DeserializationError(_) => "Invalid parameters",
             }
-        )
+            .to_string(),
+        })
     }
 }
 

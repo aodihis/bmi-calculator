@@ -1,50 +1,37 @@
-
-#[derive(Debug,PartialEq)]
+#[derive(Debug, PartialEq)]
 pub enum BmiClass {
     Underweight,
     Healthy,
     Overweight,
     Obese1,
     Obese2,
-    Obese3
+    Obese3,
 }
 
 impl BmiClass {
     pub fn as_str(&self) -> &'static str {
         match *self {
-            BmiClass::Underweight => {"Underweight"}
-            BmiClass::Healthy => {"Healthy weight"}
-            BmiClass::Overweight => {"Overweight but not obese"}
-            BmiClass::Obese1 => {"Obese class I"}
-            BmiClass::Obese2 => {"Obese class II"}
-            BmiClass::Obese3 => {"Obese class III"}
+            BmiClass::Underweight => "Underweight",
+            BmiClass::Healthy => "Healthy weight",
+            BmiClass::Overweight => "Overweight but not obese",
+            BmiClass::Obese1 => "Obese class I",
+            BmiClass::Obese2 => "Obese class II",
+            BmiClass::Obese3 => "Obese class III",
         }
     }
 }
 pub fn calculate_bmi(weight: f32, height: f32) -> f32 {
-    two_decimals((weight / (height*height)).max(0.0))
+    two_decimals((weight / (height * height)).max(0.0))
 }
 
 pub fn bmi_classification(bmi: f32) -> BmiClass {
     match bmi {
-        bmi if bmi < 18.5 => {
-            BmiClass::Underweight
-        },
-        bmi if bmi < 25.0 => {
-            BmiClass::Healthy
-        },
-        bmi if bmi < 30.0 => {
-            BmiClass::Overweight
-        },
-        bmi if bmi < 35.0 => {
-            BmiClass::Obese1
-        },
-        bmi if bmi < 40.0 => {
-            BmiClass::Obese2
-        },
-        _ => {
-            BmiClass::Obese3
-        }
+        bmi if bmi < 18.5 => BmiClass::Underweight,
+        bmi if bmi < 25.0 => BmiClass::Healthy,
+        bmi if bmi < 30.0 => BmiClass::Overweight,
+        bmi if bmi < 35.0 => BmiClass::Obese1,
+        bmi if bmi < 40.0 => BmiClass::Obese2,
+        _ => BmiClass::Obese3,
     }
 }
 
