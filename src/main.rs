@@ -4,6 +4,7 @@
 
 mod routes;
 mod config;
+mod utils;
 
 use crate::config::Config;
 use actix_web::http::StatusCode;
