@@ -11,6 +11,7 @@ mod errors;
 
 use crate::config::Config;
 use actix_web::{middleware, web, App, HttpServer};
+use dotenv::dotenv;
 use log::info;
 use crate::handlers::error_handler::{handle_json_error, not_found};
 use crate::routes::bmi_route::init as bmi_routes_init;
@@ -18,6 +19,7 @@ use crate::routes::bmi_route::init as bmi_routes_init;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    dotenv().ok();
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
 
     let config = Config::load().expect("Failed to load configuration");

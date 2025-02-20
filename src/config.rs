@@ -1,4 +1,5 @@
 use std::env;
+use dotenv::Error;
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize)]
@@ -7,8 +8,7 @@ pub struct Config {
     pub port: u16,
 }
 impl Config {
-    pub fn load() -> Result<Self, config::ConfigError> {
-
+    pub fn load() -> Result<Self, Error> {
         Ok(
             Config {
                 host: env::var("HOST").unwrap_or_else(|_| "127.0.0.1".to_string()),

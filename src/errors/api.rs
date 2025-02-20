@@ -5,10 +5,10 @@ use derive_more::Display;
 
 #[derive(Debug, Display)]
 pub enum ApiError {
-    #[display(fmt = "Validation error: {}", _0)]
+    #[display("Validation error: {_0}")]
     ValidationError(String),
 
-    #[display(fmt = "Deserialization error: {}", _0)]
+    #[display("Deserialization error: {_0}")]
     DeserializationError(String),
 
 }
