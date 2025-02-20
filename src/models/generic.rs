@@ -9,8 +9,13 @@ pub enum StatusResponse {
 }
 
 #[derive(Serialize)]
-pub struct ApiResponse<T> {
+pub struct SuccessResponse<T> {
     pub status: StatusResponse,
-    pub message: Option<String>,
-    pub data: Option<T>,
+    pub data: T,
+}
+
+#[derive(Serialize)]
+pub struct ErrorResponse {
+    pub status: StatusResponse,
+    pub message: String,
 }

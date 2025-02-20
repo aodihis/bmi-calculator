@@ -7,34 +7,13 @@ mod config;
 mod utils;
 mod handlers;
 mod models;
+mod errors;
 
 use crate::config::Config;
-use actix_web::http::StatusCode;
-use actix_web::{middleware, web, App, HttpResponse, HttpServer, Responder};
-use serde::Serialize;
-
-async fn bmi() -> impl Responder {
-    "Hello worldx!"
-}
-
-// Define a struct for the JSON response
-#[derive(Serialize)]
-struct ErrorResponse {
-    status: String,
-    message: String,
-}
-
-async fn not_found() -> actix_web::Result<HttpResponse> {
-    let error_response = ErrorResponse {
-        status: "error".to_string(),
-        message: "Not found".to_string(),
-    };
-
-    let response = HttpResponse::build(StatusCode::NOT_FOUND)
-        .json(error_response);
-
-    Ok(response)
-}
+use actix_web::{middleware, web, App, HttpServer};
+use log::info;
+use crate::handlers::error_handler::{handle_json_error, not_found};
+use crate::routes::bmi_route::init as bmi_routes_init;
 
 
 #[actix_web::main]
@@ -43,14 +22,14 @@ async fn main() -> std::io::Result<()> {
 
     let config = Config::load().expect("Failed to load configuration");
 
+    info!("Listening for incoming connections on {}:{}", config.host, config.port);
     HttpServer::new(move || {
         App::new()
+            .app_data(web::JsonConfig::default()
+                .error_handler(handle_json_error))
             .wrap(middleware::Compress::default())
             .wrap(middleware::Logger::default())
-            .service(
-                web::scope("/api")
-                    .route("/bmi", web::get().to(bmi)),
-            )
+            .configure(bmi_routes_init)
             .default_service(web::route().to(not_found))
     })
     .bind((config.host, config.port))?

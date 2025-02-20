@@ -368,6 +368,7 @@ dependencies = [
  "actix-web",
  "anyhow",
  "config",
+ "derive_more",
  "env_logger",
  "log",
  "serde",
