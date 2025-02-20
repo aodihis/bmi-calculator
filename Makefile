@@ -9,9 +9,12 @@ release:
 	$(CARGO) run --release
 
 build:
+	$(CARGO) build
+
+build-release:
 	$(CARGO) build --release
 
-dev:
+watch:
 	$(CARGO_WATCH) \
 		-w src/ \
 		-w .env \

@@ -22,7 +22,7 @@ impl BmiClass {
     }
 }
 pub fn calculate_bmi(weight: f32, height: f32) -> f32 {
-     (weight / (height*height)).max(0.0)
+    two_decimals((weight / (height*height)).max(0.0))
 }
 
 pub fn bmi_classification(bmi: f32) -> BmiClass {
@@ -48,20 +48,21 @@ pub fn bmi_classification(bmi: f32) -> BmiClass {
     }
 }
 
+fn two_decimals(num: f32) -> f32 {
+    (num * 100.0).floor() / 100.0
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    fn two_decimals(num: f32) -> f32 {
-        (num * 100.0).floor() / 100.0
-    }
     #[test]
     fn test_calculate_bmi() {
         let res = calculate_bmi(50.0, 1.3);
-        assert_eq!(two_decimals(res), 29.58);
+        assert_eq!(res, 29.58);
 
         let res = calculate_bmi(90.0, 1.7);
-        assert_eq!(two_decimals(res), 31.14);
+        assert_eq!(res, 31.14);
     }
 
     #[test]
