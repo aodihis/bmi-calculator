@@ -7,7 +7,7 @@ use crate::utils::bmi::{bmi_classification, calculate_bmi};
 pub async fn bmi(data: web::Json<BmiRequest>) -> HttpResponse {
 
     if let Err(err) = data.validate() {
-        return HttpResponse::BadRequest().json(ApiResponse {
+        return HttpResponse::BadRequest().json(ApiResponse::<()> {
             status: StatusResponse::Error,
             data: None,
             message: Option::from(err.to_string())
