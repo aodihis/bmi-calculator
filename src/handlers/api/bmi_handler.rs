@@ -20,7 +20,7 @@ pub async fn bmi(data: web::Json<BmiRequest>) -> Result<HttpResponse, ApiError> 
             status: StatusResponse::Success,
             data: Some(BmiResponse {
                 bmi: bmi_value,
-                classification,
+                classification: classification.as_str().to_string(),
             }),
         }
     ))
