@@ -1,15 +1,21 @@
+use std::fmt::{Display, Formatter};
 use crate::models::generic::{ErrorResponse, StatusResponse};
 use actix_web::http::StatusCode;
 use actix_web::{HttpResponse, ResponseError};
-use derive_more::Display;
 
-#[derive(Debug, Display)]
+#[derive(Debug)]
 pub enum ApiError {
-    #[display("Validation error: {_0}")]
     ValidationError(String),
-
-    #[display("Deserialization error: {_0}")]
     DeserializationError(String),
+}
+
+impl Display for ApiError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ApiError::ValidationError(message) => write!(f, "Invalid parameters: {}", message),
+            ApiError::DeserializationError(message) => write!(f, "Invalid parameters: {}", message),
+        }
+    }
 }
 
 impl ResponseError for ApiError {
