@@ -31,6 +31,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(web::JsonConfig::default().error_handler(handle_json_error))
             .wrap(middleware::Compress::default())
+            .wrap(middleware::NormalizePath::trim())
             .wrap(middleware::Logger::default())
             .configure(bmi_routes_init)
             .default_service(web::route().to(not_found))
